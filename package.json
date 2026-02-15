@@ -1,18 +1,21 @@
 {
-  "name": "malls-api",
+  "name": "malls-maroc-api",
   "version": "1.0.0",
-  "description": "API REST Malls Maroc",
+  "description": "API REST des malls et centres commerciaux du Maroc",
   "main": "server.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["malls", "maroc", "shopping", "api"],
+  "author": "Backend Team",
   "license": "ISC",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2"
   }
 }
+
