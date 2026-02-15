@@ -1,16 +1,12 @@
-// server.js
-// Node LTS 22
-
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Base de données mock (en mémoire)
 const malls = [
   {
     id: 1,
@@ -49,39 +45,34 @@ const malls = [
   }
 ];
 
-// GET /api/malls
-// Supporte filtres ?city= & ?search=
 app.get("/api/malls", (req, res) => {
   const { city, search } = req.query;
 
   let result = [...malls];
 
   if (city) {
-    result = result.filter(m => 
+    result = result.filter(m =>
       m.city.toLowerCase() === city.toLowerCase()
     );
   }
 
   if (search) {
-    result = result.filter(m => 
+    result = result.filter(m =>
       m.name.toLowerCase().includes(search.toLowerCase())
     );
   }
 
-  // On retourne un résumé + nombre de magasins
-  const response = result.map(m => ({
-    id: m.id,
-    name: m.name,
-    city: m.city,
-    address: m.address,
-    storeCount: m.stores.length
-  }));
-
-  res.json(response);
+  res.json(
+    result.map(m => ({
+      id: m.id,
+      name: m.name,
+      city: m.city,
+      address: m.address,
+      storeCount: m.stores.length
+    }))
+  );
 });
 
-// GET /api/malls/:id
-// Retourne le détail + liste des magasins
 app.get("/api/malls/:id", (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -101,11 +92,10 @@ app.get("/api/malls/:id", (req, res) => {
   });
 });
 
-// Health check
 app.get("/", (req, res) => {
   res.send("API Malls Maroc is running 🚀");
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
